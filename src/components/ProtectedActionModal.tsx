@@ -1,0 +1,12 @@
+import { useState } from 'react';
+
+interface Props { title: string; description: string; actionLabel: string; onClose: () => void; onConfirm: () => void; }
+type Step = 'confirm' | 'permission' | 'password';
+
+export default function ProtectedActionModal({ title, description, actionLabel, onClose, onConfirm }: Props) {
+  const [step, setStep] = useState<Step>('confirm');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const submit = () => { if (password === '122905042003') { onConfirm(); onClose(); return; } setError('Incorrect permission code.'); setPassword(''); };
+  return <div className="modal-backdrop" onClick={onClose}><div className="modal protected-action-modal" onClick={(event) => event.stopPropagation()}>{step === 'confirm' && <><div className="modal-heading"><div><div className="eyebrow">CONFIRM CHANGE</div><h2>{title}?</h2></div><button className="close-button" onClick={onClose}>×</button></div><p className="profile-copy">{description}</p><div className="modal-actions"><button className="outline-button" onClick={onClose}>No, keep current rules</button><button className="danger-button" onClick={() => setStep('permission')}>Yes, continue</button></div></>}{step === 'permission' && <><div className="modal-heading"><div><div className="eyebrow">OWNER PERMISSION</div><h2>Ask permission from Chandu</h2></div><button className="close-button" onClick={onClose}>×</button></div><p className="profile-copy">Permission is required before changing the auction rules.</p><button className="primary-button full-button" onClick={() => setStep('password')}>Ask permission from Chandu</button></>}{step === 'password' && <><div className="modal-heading"><div><div className="eyebrow">PERMISSION CODE</div><h2>Enter the code</h2></div><button className="close-button" onClick={onClose}>×</button></div><p className="profile-copy">Enter the permission code provided by Chandu.</p><input className="permission-input" autoFocus inputMode="numeric" type="password" value={password} maxLength={12} onChange={(event) => { setPassword(event.target.value.replace(/\D/g, '')); setError(''); }} onKeyDown={(event) => { if (event.key === 'Enter') submit(); }} placeholder="••••••••••••" />{error && <p className="permission-error">{error}</p>}<button className="danger-button full-button" onClick={submit} disabled={password.length !== 12}>{actionLabel}</button></>}</div></div>;
+}
