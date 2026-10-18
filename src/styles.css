@@ -28,3 +28,4 @@
  .delete-player-action{color:#ff9b91!important}.delete-player-action:hover{background:#552d33!important;color:#ffc1bb!important}
  .team-profile-stats{grid-template-columns:repeat(4,1fr)}
 @media(max-width:650px){.team-profile-stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){.mobile-bid-context{border:2px solid var(--gold);background:linear-gradient(135deg,#293b43,#182532);padding:18px 16px;margin-bottom:16px;box-shadow:0 8px 24px #0005}.mobile-bid-context>div:first-child span,.mobile-bid-context>div:nth-child(2) span{font-size:10px;color:#b9c8cd}.mobile-bid-context>div:first-child strong{font-size:22px}.mobile-bid-context>div:nth-child(2) strong{font-size:38px;line-height:1;color:var(--gold);letter-spacing:-.04em}.mobile-bid-context small{display:block;grid-column:1 / -1;margin-top:12px;padding-top:12px;border-top:1px solid #f4b94266;color:#61e0d4;font:600 15px 'Space Grotesk';text-align:left}}
