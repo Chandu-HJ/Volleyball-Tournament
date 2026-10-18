@@ -26,3 +26,5 @@
  .player-search input{width:230px;background:#101b24;border:1px solid var(--line);color:#f1f5f7;border-radius:5px;padding:11px 13px;font-size:12px;outline:0}.player-search input:focus{border-color:var(--teal)}.squad-share-actions{display:flex;gap:8px;margin-top:18px}.squad-share-actions>*{flex:1}.team-roster-modal{max-height:calc(100vh - 32px);overflow:auto}
 @media(max-width:650px){.player-search{margin-top:14px}.player-search input{width:100%;min-height:44px}.squad-share-actions{flex-direction:column}.squad-share-actions>*{width:100%}}
  .delete-player-action{color:#ff9b91!important}.delete-player-action:hover{background:#552d33!important;color:#ffc1bb!important}
+ .team-profile-stats{grid-template-columns:repeat(4,1fr)}
+@media(max-width:650px){.team-profile-stats{grid-template-columns:repeat(2,1fr)}}
