@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { ChangeEvent } from 'react';
 import type { AuctionState, PlayerCategory, PlayerStatus } from '../models/auctionModels';
 import { CATEGORIES } from '../models/auctionModels';
@@ -14,6 +14,7 @@ export default function PlayersPage({ state, onMakeAvailable, onMakeAllAvailable
   const [search, setSearch] = useState('');
   const [groupBy, setGroupBy] = useState<'all' | 'teams' | 'category'>('all');
   const [openMenuPlayerId, setOpenMenuPlayerId] = useState<string | null>(null);
+  useEffect(() => { const closeMenu = (event: PointerEvent) => { if (!(event.target as HTMLElement).closest('.player-menu-wrap')) setOpenMenuPlayerId(null); }; document.addEventListener('pointerdown', closeMenu); return () => document.removeEventListener('pointerdown', closeMenu); }, []);
   const [editingPlayer, setEditingPlayer] = useState<AuctionState['players'][number] | null>(null);
   const [allocatePlayerId, setAllocatePlayerId] = useState<string | null>(null);
   const [draftName, setDraftName] = useState('');

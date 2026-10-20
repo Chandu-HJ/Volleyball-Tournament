@@ -43,6 +43,30 @@ export interface BidRecord {
   createdAt: string;
 }
 
+export type MatchStatus = 'scheduled' | 'live' | 'completed' | 'cancelled';
+
+export interface Match {
+  id: string;
+  order: number;
+  isFinal?: boolean;
+  teamAId: string;
+  teamBId: string;
+  scheduledDate?: string;
+  scheduledTime?: string;
+  status: MatchStatus;
+  targetPoints?: number;
+  scoreA: number;
+  scoreB: number;
+  firstHalfScoreA?: number;
+  firstHalfScoreB?: number;
+  secondHalfScoreA?: number;
+  secondHalfScoreB?: number;
+  currentHalf?: 1 | 2;
+  scoreHistory?: Array<{ teamId: string; half: 1 | 2; delta?: 1 | -1 }>;
+  winnerId?: string;
+  completedAt?: string;
+}
+
 export interface AuctionState {
   rules: AuctionRules;
   teams: Team[];
@@ -55,4 +79,6 @@ export interface AuctionState {
   currentBid: number;
   highestBidderId: string | null;
   auctionRound: number;
+  matches: Match[];
+  currentMatchId: string | null;
 }

@@ -1,10 +1,10 @@
 import type { Player, Team } from '../models/auctionModels';
 
-interface Props { team: Team; players: Player[]; onClose: () => void; }
+interface Props { team: Team; players: Player[]; minimumSquadSize?: number; onClose: () => void; }
 
 const escapeXml = (value: string) => value.replace(/[<>&'"]/g, (character) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', "'": '&apos;', '"': '&quot;' })[character] ?? character);
 
-export default function TeamDetails({ team, players, onClose }: Props) {
+export default function TeamDetails({ team, players, minimumSquadSize = 7, onClose }: Props) {
   const bought = players.filter((player) => team.playerIds.includes(player.id)).sort((a, b) => Number(Boolean(b.isCaptain)) - Number(Boolean(a.isCaptain)));
   const spent = bought.reduce((sum, player) => sum + (player.soldPrice ?? 0), 0);
 
@@ -50,7 +50,7 @@ export default function TeamDetails({ team, players, onClose }: Props) {
     else await downloadSquad();
   };
 
-  return <div className="modal-backdrop" onClick={onClose}><div className="modal team-roster-modal" onClick={(event) => event.stopPropagation()}><div className="modal-heading"><div><div className="eyebrow">{team.name}</div><h2>Squad</h2></div><button className="close-button" onClick={onClose}>&times;</button></div><div className="team-detail-stats"><div><strong>{bought.length}</strong><small>players</small></div><div><strong>{spent}</strong><small>spent</small></div><div><strong>{team.points}</strong><small>remaining</small></div></div><div className="bought-list">{bought.length ? bought.map((player) => <div className="bought-row" key={player.id}>{player.profilePic ? <img className="squad-player-avatar" src={player.profilePic} alt="" /> : <span className="squad-player-avatar initials">{player.name.slice(0, 1).toUpperCase()}</span>}<span><strong>{player.name}{player.isCaptain && <em className="captain-badge">CAPTAIN</em>}</strong><small>{player.category}</small></span><b>{player.soldPrice} pts</b></div>) : <p className="empty-text">No players purchased yet.</p>}</div><div className="squad-share-actions"><button className="outline-button" onClick={downloadSquad}>Download PNG image</button><button className="primary-button" onClick={shareSquad}>Share PNG</button></div></div></div>;
+  return <div className="modal-backdrop" onClick={onClose}><div className="modal team-roster-modal" onClick={(event) => event.stopPropagation()}><div className="modal-heading"><div><div className="eyebrow">{team.name}</div><h2>Squad</h2></div><button className="close-button" onClick={onClose}>&times;</button></div><div className="team-detail-stats"><div><strong>{bought.length}</strong><small>players</small></div><div><strong>{spent}</strong><small>total spent</small></div><div><strong>{team.points}</strong><small>remaining points</small></div><div><strong>{Math.max(0, minimumSquadSize - bought.length)}</strong><small>players needed</small></div></div><div className="bought-list">{bought.length ? bought.map((player) => <div className="bought-row" key={player.id}>{player.profilePic ? <img className="squad-player-avatar" src={player.profilePic} alt="" /> : <span className="squad-player-avatar initials">{player.name.slice(0, 1).toUpperCase()}</span>}<span><strong>{player.name}{player.isCaptain && <em className="captain-badge">CAPTAIN</em>}</strong><small>{player.category}</small></span><b>{player.soldPrice} pts</b></div>) : <p className="empty-text">No players purchased yet.</p>}</div><div className="squad-share-actions"><button className="outline-button" onClick={downloadSquad}>Download PNG image</button><button className="primary-button" onClick={shareSquad}>Share PNG</button></div></div></div>;
 }
 
 
